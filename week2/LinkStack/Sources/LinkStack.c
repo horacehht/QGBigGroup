@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include".\LinkStack.h"//引用不同文件夹的头文件
+#include"..\Headers\LinkStack.h"//引用不同文件夹的头文件
 //每前进一个目录加一个点
 
 /**
@@ -27,15 +27,18 @@ Status initLStack(LinkStack *s){
  *  @notice      : None
  */
 Status isEmptyLStack(LinkStack *s){
-    if(isdestoyed==1){
-        printf("栈已被销毁！\n");
+    if(isinited==0){
+        printf("栈未初始化！\n");
+        return ERROR;
     }
     else{
         if(isempty==1){
             printf("栈为空！\n");
+            return SUCCESS;
         }
         if(isempty==0){
             printf("栈非空！\n");
+            return SUCCESS;
         }
     }
 }
@@ -278,8 +281,9 @@ void showmenu(){
     printf("*       e.清空整栈       *\n");
     printf("*       f.元素个数       *\n");
     printf("*       g.插入元素       *\n");
-    printf("*       h.删除元素       *\n");
+    printf("*     h.删除栈顶元素       *\n");
     printf("*     i.插入多个元素     *\n");
+    printf("你的选择是:");
 }
 
 /**
@@ -289,10 +293,106 @@ void showmenu(){
  *	@return		 : None
  *  @notice      : None
  */
-void choice(char str){
+void choice(char str,LinkStack *s){
     Status result;//用于记录结果
     switch (str)
     {
+        case 'a':{
+            result = initLStack(s);
+            break;
+        }
 
-    }
+        case 'b':{
+            result = destroyLStack(s);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            else{
+                printf("整栈删除成功！\n");
+            }
+            break;
+        }
+
+        case 'c':{
+            result = isEmptyLStack(s);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            break;
+        }
+        
+        case 'd':{
+            ElemType *e;
+            result = getTopLStack(s,e);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            else{
+                printf("栈顶元素为:%d",*e);
+            }
+            break;
+        }
+
+        case 'e':{
+            result = clearLStack(s);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            else{
+                printf("整栈清空成功！\n");
+            }
+            break;
+        }
+
+        case 'f':{
+            int *length;
+            result = LStackLength(s,length);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            else{
+                printf("栈的大小为:%d\n",*length);
+            }
+            break;
+        }
+
+        case 'g':{
+            ElemType value;
+            printf("请输入int数值范围内的数:");
+            scanf("%d",value);
+            getchar();//吃回车
+            while (value>2147483647 || value<-2147483648)
+            {
+                printf("请输入int数值范围内的数:");
+                scanf("%d",value);
+                getchar();
+            }
+            
+            result = pushLStack(s,value);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            else{
+                printf("插入成功！\n");
+            }
+            break;
+        }
+
+        case 'h':{
+            ElemType *value;
+            result = popLStack(s,value);
+            if(result==ERROR){
+                printf("请重新选择！\n");
+            }
+            else{
+                printf("删除的元素值为:%d\n",*value);
+            }
+            break;
+        }
+
+        default:{
+            printf("请输入从a到h的字母！\n");
+            break;
+        }
+    }   
 }

@@ -1,7 +1,6 @@
-#include<stdlib.h>
 #include<stdio.h>
-#include".\LinkStack.h"
-
+#include"..\Headers\LinkStack.h"
+LinkStack s;
 int main()
 {
     char str;
@@ -10,7 +9,7 @@ int main()
         showmenu();
         scanf("%c",&str);
         getchar();
-        choice(str);
+        choice(str,&s);
     }    
     return 0;
 }

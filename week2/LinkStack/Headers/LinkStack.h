@@ -124,6 +124,6 @@ void showmenu();
  *	@return		 : None
  *  @notice      : None
  */
-void choice(char str);
+void choice(char str,LinkStack *s);
 
 #endif 
