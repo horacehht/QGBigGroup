@@ -261,3 +261,38 @@ Status pushNodes(LinkStack *s,int n){
         }
     }
 }
+
+/**
+ *  @name        : void showmenu()
+ *	@description : show menu on dos
+ *	@param		 : None
+ *	@return		 : None
+ *  @notice      : None
+ */
+void showmenu(){
+    printf("********************\n");
+    printf("*       a.初始化栈       *\n");
+    printf("*       b.销毁整栈       *\n");
+    printf("*       c.是否空栈       *\n");
+    printf("*       d.栈顶元素       *\n");
+    printf("*       e.清空整栈       *\n");
+    printf("*       f.元素个数       *\n");
+    printf("*       g.插入元素       *\n");
+    printf("*       h.删除元素       *\n");
+    printf("*     i.插入多个元素     *\n");
+}
+
+/**
+ *  @name        : void choice(char str)
+ *	@description : user choose in dos
+ *	@param		 : char str
+ *	@return		 : None
+ *  @notice      : None
+ */
+void choice(char str){
+    Status result;//用于记录结果
+    switch (str)
+    {
+
+    }
+}

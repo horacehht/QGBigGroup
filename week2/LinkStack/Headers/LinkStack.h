@@ -1,5 +1,5 @@
-#ifndef STACK_H_INCLUDED
-#define STACK_H_INCLUDED
+#ifndef LINKSTACK_H_INCLUDED
+#define LINKSTACK_H_INCLUDED
 
 typedef enum Status 
 {
@@ -107,5 +107,23 @@ Status popLStack(LinkStack *s,ElemType *data);
  *  @notice      : None
  */
 Status pushNodes(LinkStack *s,int n);
+
+/**
+ *  @name        : void showmenu()
+ *	@description : show menu on dos
+ *	@param		 : None
+ *	@return		 : None
+ *  @notice      : None
+ */
+void showmenu();
+
+/**
+ *  @name        : void choice(char str)
+ *	@description : user choose in dos
+ *	@param		 : char str
+ *	@return		 : None
+ *  @notice      : None
+ */
+void choice(char str);
 
 #endif 
