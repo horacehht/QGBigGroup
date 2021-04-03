@@ -3,19 +3,30 @@
 #include"..\Headers\LinkStack.h"//引用不同文件夹的头文件
 //每前进一个目录加一个点
 
+//三个状态量
+int isempty = 1;//isempty用来检验栈是否为空栈，1为空，0为非空
+int isdestroyed = 1;//是否被销毁，1为销毁，0为未销毁
+int isinited = 0;//是否已初始化，1为已初始化，0为未初始化
+
 /**
- *  @name        : Status initLStack(LinkStack *s)
+ *  @name        : Status initLStack(LinkStack **s)
  *	@description : initialize the LinkStack
  *	@param		 : LinkStack *s
  *	@return		 : Status
  *  @notice      : None
  */
-Status initLStack(LinkStack *s){
-    s->count = 0;
-    s->top = NULL;
-    isempty = 1;
-    isdestoyed = 0;
-    isinited = 1;
+Status initLStack(LinkStack **s){
+    *s = (LinkStack*)malloc(sizeof(LinkStack));
+    if(*s==NULL){//空间申请失败
+        return ERROR;
+    }
+    else{
+        (*s)->count = 0;
+        (*s)->top = NULL;
+        isempty = 1;
+        isinited = 1;
+        isdestroyed = 0;
+    }
     return SUCCESS;
 }
 
@@ -41,6 +52,7 @@ Status isEmptyLStack(LinkStack *s){
             return SUCCESS;
         }
     }
+    return SUCCESS;    
 }
 
 /**
@@ -56,7 +68,7 @@ Status getTopLStack(LinkStack *s,ElemType *e){
         return ERROR;
     }
     else{
-        if(isdestoyed==1){
+        if(isdestroyed==1){
             printf("栈已被销毁！无栈顶元素\n");
             return ERROR;
         }
@@ -81,8 +93,8 @@ Status getTopLStack(LinkStack *s,ElemType *e){
  *  @notice      : None
  */
 Status clearLStack(LinkStack *s){
-    if(isdestoyed==1){
-        printf("栈已被摧毁！\n");
+    if(isdestroyed==1){
+        printf("栈已被清空！\n");
         return ERROR;
     }
     else{
@@ -95,7 +107,7 @@ Status clearLStack(LinkStack *s){
             return ERROR;
         }
         else{
-            LinkStackPtr p,q;
+            LinkStackPtr p;
             p = s->top->next;
             while (p)
             {
@@ -108,7 +120,7 @@ Status clearLStack(LinkStack *s){
             s->top = NULL;
             s->count = 0;
             isempty = 1;
-            isdestoyed = 0;
+            isdestroyed = 0;
             return SUCCESS;
         }
     }
@@ -129,6 +141,10 @@ Status destroyLStack(LinkStack *s){
     else{
         if(isempty==1){//那么只需销毁掉结构体
             free(s);
+            s = NULL;
+            isempty = 0;
+            isdestroyed = 1;
+            isinited = 0;
             return SUCCESS;
         }
         else{//要把链栈销毁，并把结构体销毁
@@ -142,7 +158,9 @@ Status destroyLStack(LinkStack *s){
             }//循环结束后还剩一个栈结点
             free(s->top);
             free(s);//把整个结构体都给销毁掉
-            isdestoyed = 1;
+            s = NULL;
+            isempty = 0;
+            isdestroyed = 1;
             isinited = 0;
             return SUCCESS;
         }
@@ -159,6 +177,10 @@ Status destroyLStack(LinkStack *s){
 Status LStackLength(LinkStack *s,int *length){
     if(isinited==0){
         printf("栈未初始化！\n");
+        return ERROR;
+    }
+    else if(isdestroyed==1){
+        printf("栈已被销毁！\n");
         return ERROR;
     }
     else{
@@ -180,19 +202,17 @@ Status pushLStack(LinkStack *s,ElemType data){
         return ERROR;
     }
     else{
-        if(isdestoyed==1){
+        if(isdestroyed==1){
             printf("栈已被摧毁！\n");
             return ERROR;
         }
         else{
-            LinkStackPtr r = (LinkStackPtr)malloc(sizeof(LinkStack));
+            LinkStackPtr r = (LinkStackPtr)malloc(sizeof(StackNode));
             r->data = data;
             r->next = s->top;
             s->top = r;
             s->count++;
-            if(s->count>0){
-                isempty = 0;
-            }
+            isempty = 0;
             return SUCCESS;
         }
     }
@@ -211,12 +231,12 @@ Status popLStack(LinkStack *s,ElemType *data){
         return ERROR;
     }
     else{
-        if(isdestoyed==1){
+        if(isdestroyed==1){
             printf("栈已被摧毁！\n");
             return ERROR;
         }
         else{
-            if(isempty==0){
+            if(isempty==1){
                 printf("空栈无法删除！\n");
                 return ERROR;
             }
@@ -225,6 +245,7 @@ Status popLStack(LinkStack *s,ElemType *data){
                 p = s->top;
                 *data = p->data;
                 s->top = p->next;
+                s->count--;
                 free(p);
                 return SUCCESS;
             }
@@ -253,16 +274,45 @@ Status pushNodes(LinkStack *s,int n){
             for (int i = 1; i <= n; i++)
             {
                 ElemType value; 
-                scanf("%d",value);
+                scanf("%d",&value);
                 getchar();//吃scanf输入的回车
-                LinkStackPtr p = (LinkStackPtr)malloc(sizeof(LinkStack));
+                LinkStackPtr p = (LinkStackPtr)malloc(sizeof(StackNode));
                 p->data = value;
                 p->next = s->top;
                 s->top = p;
+                s->count++;
             }
+            isempty = 0;
             return SUCCESS;
         }
     }
+}
+
+/**
+ *  @name        : Status TraverseLStack(LinkStack *s)
+ *	@description : print the data 
+ *	@param		 : LinkStack *s
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status TraverseLStack(LinkStack *s){
+    if(isinited==0){
+        printf("栈未初始化！\n");
+        return ERROR;
+    }
+    LinkStackPtr p;
+    p = s->top;
+    if(p==NULL){
+        printf("空栈无元素！\n");
+        return ERROR;
+    }
+    printf("栈顶到栈底的元素为:");
+    while (p)
+    {
+        printf("%d ",p->data);
+        p = p->next;
+    }
+    return SUCCESS;
 }
 
 /**
@@ -273,7 +323,7 @@ Status pushNodes(LinkStack *s,int n){
  *  @notice      : None
  */
 void showmenu(){
-    printf("********************\n");
+    printf("**************************\n");
     printf("*       a.初始化栈       *\n");
     printf("*       b.销毁整栈       *\n");
     printf("*       c.是否空栈       *\n");
@@ -281,118 +331,10 @@ void showmenu(){
     printf("*       e.清空整栈       *\n");
     printf("*       f.元素个数       *\n");
     printf("*       g.插入元素       *\n");
-    printf("*     h.删除栈顶元素       *\n");
+    printf("*     h.删除栈顶元素     *\n");
     printf("*     i.插入多个元素     *\n");
+    printf("*         j.遍历         *\n");
+    printf("*         k.清屏         *\n");
+    printf("**************************\n");
     printf("你的选择是:");
-}
-
-/**
- *  @name        : void choice(char str)
- *	@description : user choose in dos
- *	@param		 : char str
- *	@return		 : None
- *  @notice      : None
- */
-void choice(char str,LinkStack *s){
-    Status result;//用于记录结果
-    switch (str)
-    {
-        case 'a':{
-            result = initLStack(s);
-            break;
-        }
-
-        case 'b':{
-            result = destroyLStack(s);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            else{
-                printf("整栈删除成功！\n");
-            }
-            break;
-        }
-
-        case 'c':{
-            result = isEmptyLStack(s);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            break;
-        }
-        
-        case 'd':{
-            ElemType *e;
-            result = getTopLStack(s,e);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            else{
-                printf("栈顶元素为:%d",*e);
-            }
-            break;
-        }
-
-        case 'e':{
-            result = clearLStack(s);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            else{
-                printf("整栈清空成功！\n");
-            }
-            break;
-        }
-
-        case 'f':{
-            int *length;
-            result = LStackLength(s,length);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            else{
-                printf("栈的大小为:%d\n",*length);
-            }
-            break;
-        }
-
-        case 'g':{
-            ElemType value;
-            printf("请输入int数值范围内的数:");
-            scanf("%d",value);
-            getchar();//吃回车
-            while (value>2147483647 || value<-2147483648)
-            {
-                printf("请输入int数值范围内的数:");
-                scanf("%d",value);
-                getchar();
-            }
-            
-            result = pushLStack(s,value);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            else{
-                printf("插入成功！\n");
-            }
-            break;
-        }
-
-        case 'h':{
-            ElemType *value;
-            result = popLStack(s,value);
-            if(result==ERROR){
-                printf("请重新选择！\n");
-            }
-            else{
-                printf("删除的元素值为:%d\n",*value);
-            }
-            break;
-        }
-
-        default:{
-            printf("请输入从a到h的字母！\n");
-            break;
-        }
-    }   
 }

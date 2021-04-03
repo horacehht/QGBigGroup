@@ -21,20 +21,14 @@ typedef  struct  LinkStack
 	int	count;
 }LinkStack;
 
-//三个状态量
-int isempty = 1;//isempty用来检验栈是否为空栈，1为空，0为非空
-int isdestoyed = 1;//是否被销毁，1为销毁，0为未销毁
-int isinited = 0;//是否已初始化，1为已初始化，0为未初始化
-
-
 /**
- *  @name        : Status initLStack(LinkStack *s)
+ *  @name        : Status initLStack(LinkStack **s)
  *	@description : initialize the LinkStack
  *	@param		 : LinkStack *s
  *	@return		 : Status
  *  @notice      : None
  */
-Status initLStack(LinkStack *s);
+Status initLStack(LinkStack **s);
 
 /**
  *  @name        : Status isEmptyLStack(LinkStack *s)
@@ -124,6 +118,15 @@ void showmenu();
  *	@return		 : None
  *  @notice      : None
  */
-void choice(char str,LinkStack *s);
+void choice(char str);
+
+/**
+ *  @name        : Status TraverseLStack(LinkStack *s)
+ *	@description : print the data 
+ *	@param		 : LinkStack *s
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status TraverseLStack(LinkStack *s);
 
 #endif 
