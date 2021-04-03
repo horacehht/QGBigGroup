@@ -21,17 +21,83 @@ typedef  struct  LinkStack
 	int	count;
 }LinkStack;
 
+//ä¸‰ä¸ªçŠ¶æ€é‡
+int isempty = 1;//isemptyç”¨æ¥æ£€éªŒæ ˆæ˜¯å¦ä¸ºç©ºæ ˆï¼Œ1ä¸ºç©ºï¼Œ0ä¸ºéç©º
+int isdestoyed = 1;//æ˜¯å¦è¢«é”€æ¯ï¼Œ1ä¸ºé”€æ¯ï¼Œ0ä¸ºæœªé”€æ¯
+int isinited = 0;//æ˜¯å¦å·²åˆå§‹åŒ–ï¼Œ1ä¸ºå·²åˆå§‹åŒ–ï¼Œ0ä¸ºæœªåˆå§‹åŒ–
 
 
-//Á´Õ»
-Status initLStack(LinkStack *s);//³õÊ¼»¯Õ»
-Status isEmptyLStack(LinkStack *s);//ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
-Status getTopLStack(LinkStack *s,ElemType *e);//µÃµ½Õ»¶¥ÔªËØ
-Status clearLStack(LinkStack *s);//Çå¿ÕÕ»
-Status destroyLStack(LinkStack *s);//Ïú»ÙÕ»
-Status LStackLength(LinkStack *s,int *length);//¼ì²âÕ»³¤¶È
-Status pushLStack(LinkStack *s,ElemType data);//ÈëÕ»
-Status popLStack(LinkStack *s,ElemType *data);//³öÕ»
+/**
+ *  @name        : Status initLStack(LinkStack *s)
+ *	@description : initialize the LinkStack
+ *	@param		 : LinkStack *s
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status initLStack(LinkStack *s);
+
+/**
+ *  @name        : Status isEmptyLStack(LinkStack *s)
+ *	@description : determine whether the LinkStack is empty or not
+ *	@param		 : LinkStack *s
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status isEmptyLStack(LinkStack *s);
+
+/**
+ *  @name        : Status getTopLStack(LinkStack *s,ElemType *e)
+ *	@description : get the top element data in LinkStack and store its value in e
+ *	@param		 : LinkStack *s, ElemType *e
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status getTopLStack(LinkStack *s,ElemType *e);
+
+/**
+ *  @name        : Status getTopLStack(LinkStack *s,ElemType *e)
+ *	@description : get the top element data in LinkStack and store its value in e
+ *	@param		 : LinkStack *s, ElemType *e
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status clearLStack(LinkStack *s);
+
+/**
+ *  @name        : Status destroyLStack(LinkStack *s)
+ *	@description : destroy the LinkStack
+ *	@param		 : LinkStack *s
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status destroyLStack(LinkStack *s);
+
+/**
+ *  @name        : Status LStackLength(LinkStack *s,int *length)
+ *	@description : get the length of the LinkStack
+ *	@param		 : LinkStack *s,int *length
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status LStackLength(LinkStack *s,int *length);
+
+/**
+ *  @name        : Status pushLStack(LinkStack *s,ElemType data)
+ *	@description : push the data into the LinkStack
+ *	@param		 : LinkStack *s,ElemType data
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status pushLStack(LinkStack *s,ElemType data);
+
+/**
+ *  @name        : Status popLStack(LinkStack *s,ElemType *data)
+ *	@description : pop out the top element in the LinkStack
+ *	@param		 : LinkStack *s,ElemType *data
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status popLStack(LinkStack *s,ElemType *data);
 
 
 #endif 
