@@ -228,3 +228,36 @@ Status popLStack(LinkStack *s,ElemType *data){
         }
     }
 }
+
+/**
+ *  @name        : Status pushNodes(LinkStack *s,int n)
+ *	@description : push many datas into the LinkStack
+ *	@param		 : LinkStack *s,int n
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status pushNodes(LinkStack *s,int n){
+    if(isinited==0){
+        printf("栈未初始化！\n");
+        return ERROR;
+    }
+    else{
+        if(n<=0){
+        printf("请输入正确范围内的数字！（自然数）\n");
+        return ERROR;
+        }
+        else{
+            for (int i = 1; i <= n; i++)
+            {
+                ElemType value; 
+                scanf("%d",value);
+                getchar();//吃scanf输入的回车
+                LinkStackPtr p = (LinkStackPtr)malloc(sizeof(LinkStack));
+                p->data = value;
+                p->next = s->top;
+                s->top = p;
+            }
+            return SUCCESS;
+        }
+    }
+}

@@ -99,5 +99,13 @@ Status pushLStack(LinkStack *s,ElemType data);
  */
 Status popLStack(LinkStack *s,ElemType *data);
 
+/**
+ *  @name        : Status pushNodes(LinkStack *s,int n)
+ *	@description : push many datas into the LinkStack
+ *	@param		 : LinkStack *s,int n
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status pushNodes(LinkStack *s,int n);
 
 #endif 
