@@ -7,24 +7,24 @@ typedef enum Status
 } Status;
 
 typedef int ElemType;
+ElemType arr[100];
 
 typedef struct SqStack 
 {
-	ElemType *elem;
-	int top;
-	int size;
+	ElemType *elem;//æŒ‡çš„æ˜¯ä¸€ä¸ªæ•°ç»„å—ï¼Ÿ
+	int top;//æ ˆé¡¶æŒ‡é’ˆ
+	int size;//æ•°ç»„çš„æœ€å¤§å®¹é‡
 } SqStack;
 
 
-//»ùÓÚÊı×éµÄË³ĞòÕ»
-Status initStack(SqStack *s,int sizes);//³õÊ¼»¯Õ»
-Status isEmptyStack(SqStack *s);//ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
-Status getTopStack(SqStack *s,ElemType *e); //µÃµ½Õ»¶¥ÔªËØ
-Status clearStack(SqStack *s);//Çå¿ÕÕ»
-Status destroyStack(SqStack *s);//Ïú»ÙÕ»
-Status stackLength(SqStack *s,int *length);//¼ì²âÕ»³¤¶È
-Status pushStack(SqStack *s,ElemType data);//ÈëÕ»
-Status popStack(SqStack *s,ElemType *data);//³öÕ»
+Status initStack(SqStack *s,int sizes);
+Status isEmptyStack(SqStack *s);
+Status getTopStack(SqStack *s,ElemType *e); 
+Status clearStack(SqStack *s);
+Status destroyStack(SqStack *s);
+Status stackLength(SqStack *s,int *length);
+Status pushStack(SqStack *s,ElemType data);
+Status popStack(SqStack *s,ElemType *data);
 
 
 #endif 
