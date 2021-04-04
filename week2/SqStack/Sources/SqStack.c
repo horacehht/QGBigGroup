@@ -47,7 +47,7 @@ Status isEmptyStack(SqStack *s){
             printf("空栈!\n");
             return SUCCESS;
         }
-        else if(s->top > 0){
+        else if(s->top >= 0){//之前没加=号，一个元素的时候是没有反应的
             printf("栈非空！\n");
             return SUCCESS;
         }
@@ -72,6 +72,24 @@ Status getTopStack(SqStack *s,ElemType *e){
     }
 }
 
+Status popStack(SqStack *s,ElemType *data){
+    if(isinited == 0){
+        printf("栈未初始化！\n");
+        return ERROR;
+    }
+    else{
+        if(s->top == -1){
+            printf("空栈无法删除!\n");
+            return ERROR;
+        }
+        else{
+            *data = s->elem[s->top];
+            s->top--;
+            return SUCCESS;
+        }
+    }
+}
+
 Status clearStack(SqStack *s){
     if(isinited == 0){
         printf("未初始化！\n");
@@ -86,7 +104,7 @@ Status clearStack(SqStack *s){
         ElemType e;
         while (s->top > 0)
         {
-            popStack(s,&e);
+            popStack(s, &e);
         }
         return SUCCESS;
     }
@@ -145,24 +163,6 @@ Status pushStack(SqStack *s,ElemType data){
     }
 }
 
-Status popStack(SqStack *s,ElemType *data){
-    if(isinited == 0){
-        printf("栈未初始化！\n");
-        return ERROR;
-    }
-    else{
-        if(s->top == -1){
-            printf("空栈无法删除!\n");
-            return ERROR;
-        }
-        else{
-            *data = s->elem[s->top];
-            s->top--;
-            return SUCCESS;
-        }
-    }
-}
-
 Status TraverseStack(SqStack *s){
     if(isinited==0){
         printf("栈未初始化！\n");
@@ -173,7 +173,7 @@ Status TraverseStack(SqStack *s){
         return ERROR;
     }
     printf("栈顶到栈底的元素为:");
-    for(int i = 0; i < s->top; i++){
+    for(int i = 0; i <= s->top; i++){//之前这里少了一个输出
         printf("%d ",s->elem[i]);
     }
     return SUCCESS;
@@ -190,6 +190,7 @@ void showmenu(){
     printf("*       g.插入元素       *\n");
     printf("*     h.删除栈顶元素     *\n");
     printf("*         i.遍历         *\n");
+    printf("*         j.清屏         *\n");
     printf("**************************\n");
     printf("你的选择是:");
 }

@@ -8,7 +8,6 @@ int main()
     char str;
     while (1)
     {
-        system("cls");
         showmenu();
         scanf("%c",&str);
         getchar();
@@ -25,6 +24,7 @@ void choice(char str){
             printf("请设置栈的大小:");
             int size;
             scanf("%d",&size);
+            getchar();//这里要吃回车，不然一直有个\n卡住你
             result = initStack(&s,size);
             if(result==SUCCESS){
                 printf("初始化成功！\n");
@@ -132,9 +132,14 @@ void choice(char str){
             }
             break;
         }
+
+        case 'j':{
+            system("cls");
+            break;
+        }
     
         default:{
-            printf("请输入从a到i的字母！\n");
+            printf("请输入从a到j的字母！\n");
             break;
         }
     }   
