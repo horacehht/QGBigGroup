@@ -15,8 +15,7 @@ int get_priority(char ch){
         return 3;
     }
 }
-LL gcd(LL a,LL b);//返回最大公约数
-LL lcm(LL a,LL b);//返回最小公倍数（调用gcd）
+
 LL calc(numStack* operand, charStack* oprator)//计算两数结果，将栈内原来两数和运算符提取并移除，返回计算数值
 {
     LL b = num_pop(operand);
@@ -34,5 +33,3 @@ LL calc(numStack* operand, charStack* oprator)//计算两数结果，将栈内�
         return a/b;
     }//在main函数里通常会接个push再把新数存入操作数栈中
 }
-void yuefen(LL *new_upon,LL *lcm_num);//约分函数
-void fenshucalc();//分数计算函数,包含压栈操作

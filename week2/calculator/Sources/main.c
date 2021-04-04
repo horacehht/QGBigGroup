@@ -17,19 +17,11 @@ int main(){
     operator->count = 0;
     operator->top = NULL;
 
-    //用户提示
-    printf("请选择一个模式(输入数字)\n");
-    printf("1.普通计算器(支持带括号运算和负数运算)\n");
-    printf("2.分数计算器(可算同优先级的分数加减乘除，不出现负数)\n");
-    printf("3.大数计算器(目前只支持加法，因为coder太菜了)\n");
-
-    //选择模式
-    char mode;
-    scanf("%c",&mode);
-    getchar();//吃回车
-
-    if(mode=='1')//普通计算器
+    printf("欢迎使用普通计算器(支持带括号运算和负数运算)\n");
+    while(1)//普通计算器
     {
+        printf("请输入一个表达式，以等号=结尾");
+        char str[SIZE];//开一个足够大的数组
         scanf("%s",str);//录入表达式
         int priority_top, priority_cur;
         LL number;
@@ -148,12 +140,15 @@ int main(){
         }
         //中缀表达式已转换为后缀表达式
         
+        //计算后缀表达式
         while ( char_length(operator)!= 0)
         {
             number = calc(operand, operator);
-            num_push(number);
+            num_push(operand, number);
         }
         
+        LL result = num_top(operand);
+        printf("=%lld\n", result);
     }
 
 }
