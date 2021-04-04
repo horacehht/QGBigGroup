@@ -1,105 +1,55 @@
 #include"..\Headers\stack.h"
 #include<stdlib.h>
 
-Status initLStack(LinkStack **s){
-    *s = (LinkStack*)malloc(sizeof(LinkStack));
-    if(*s==NULL){//空间申请失败
-        return ERROR;
-    }
-    else{
-        (*s)->count = 0;
-        (*s)->top = NULL;
-        isempty = 1;
-        isinited = 1;
-        isdestroyed = 0;
-    }
-    return SUCCESS;
+//符栈实现
+void char_top(charStack *s,char *ch){
+    *ch = s->top->data;
 }
 
-Status getTopLStack(LinkStack *s,ElemType *e){
-    if(isinited==0){
-        printf("栈未初始化\n");
-        return ERROR;
-    }
-    else{
-        if(isdestroyed==1){
-            printf("栈已被销毁！无栈顶元素\n");
-            return ERROR;
-        }
-        else{
-            if(isempty==1){
-                printf("栈为空栈！无栈顶元素\n");
-                return ERROR;
-            }
-            else{
-                *e = s->top->data;
-                return SUCCESS;
-            }
-        }
-    }
+int char_length(charStack *s){
+    int len = s->count;
+    return len;
 }
 
-Status LStackLength(LinkStack *s,int *length){
-    if(isinited==0){
-        printf("栈未初始化！\n");
-        return ERROR;
-    }
-    else if(isdestroyed==1){
-        printf("栈已被销毁！\n");
-        return ERROR;
-    }
-    else{
-        *length = s->count;
-        return SUCCESS;
-    }
+void char_push(charStack *s,char ch){
+    charStackPtr p;
+    p = (charStackPtr)malloc(sizeof(charStackNode));
+    p->data = ch;
+    p->next = s->top;
+    s->top = p;
+    s->count++;
+}
+void char_pop(charStack *s,char *ch){
+    charStackPtr p;
+    p = s->top->next;
+    *ch = s->top->data;
+    free(s->top);
+    s->top = p;
+    s->count--;
 }
 
-Status pushLStack(LinkStack *s,ElemType data){
-    if(isinited==0){
-        printf("栈未初始化！\n");
-        return ERROR;
-    }
-    else{
-        if(isdestroyed==1){
-            printf("栈已被摧毁！\n");
-            return ERROR;
-        }
-        else{
-            LinkStackPtr r = (LinkStackPtr)malloc(sizeof(StackNode));
-            r->data = data;
-            r->next = s->top;
-            s->top = r;
-            s->count++;
-            isempty = 0;
-            return SUCCESS;
-        }
-    }
-}
 
-Status popLStack(LinkStack *s,ElemType *data){
-    if(isinited==0){
-        printf("栈未初始化！\n");
-        return ERROR;
-    }
-    else{
-        if(isdestroyed==1){
-            printf("栈已被摧毁！\n");
-            return ERROR;
-        }
-        else{
-            if(isempty==1){
-                printf("空栈无法删除！\n");
-                return ERROR;
-            }
-            else{
-                LinkStackPtr p;
-                p = s->top;
-                *data = p->data;
-                s->top = p->next;
-                s->count--;
-                free(p);
-                return SUCCESS;
-            }
-        }
-    }
+//数栈实现
+void num_top(numStack *s,LL *e){
+    *e = s->top->data;
+}
+int num_length(numStack *s){
+    int len = s->count;
+    return len;
+}
+void num_push(numStack *s,LL e){
+    numStackPtr p;
+    p = (numStackPtr)malloc(sizeof(numStackNode));
+    p->data = e;
+    p->next = s->top;
+    s->top = p;
+    s->count++;
+}
+void num_pop(numStack *s,LL *e){
+    numStackPtr p;
+    p = s->top->next;
+    *e = s->top->data;
+    free(s->top);
+    s->top = p;
+    s->count--;
 }
