@@ -1,8 +1,9 @@
 #ifndef CALCULATOR_H_INCLUDED
 #define CALCULATOR_H_INCLUDED
 
-typedef long long LL;
-const int SIZE = 1010;
+#define SIZE 1010
+#include".\stack.h"
+
 char str[SIZE];//开一个足够大的数组
 
 int get_priority(char ch);//判断运算符优先级的函数，返回优先级0123

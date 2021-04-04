@@ -3,7 +3,6 @@
 
 typedef long long LL;
 
-
 //符栈
 typedef struct charStackNode
 {
@@ -19,7 +18,7 @@ typedef struct charStack
 
 //筛选了一些实现了的函数，把ElemType改成了char
 //top栈顶元素，length元素个数，push压栈，pop出栈
-void char_top(charStack *s,char *ch);
+char char_top(charStack *s);
 int char_length(charStack *s);
 void char_push(charStack *s,char ch);
 void char_pop(charStack *s,char *ch);
@@ -38,7 +37,7 @@ typedef struct numStack
 	int	count;
 }numStack;
 //top栈顶元素，length元素个数，push压栈，pop出栈
-void num_top(numStack *s,LL *e);
+LL num_top(numStack *s);
 int num_length(numStack *s);
 void num_push(numStack *s,LL e);
 void num_pop(numStack *s,LL *e);

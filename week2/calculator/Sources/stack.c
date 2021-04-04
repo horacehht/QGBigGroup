@@ -2,8 +2,9 @@
 #include<stdlib.h>
 
 //符栈实现
-void char_top(charStack *s,char *ch){
-    *ch = s->top->data;
+char char_top(charStack *s){
+    char ch = s->top->data;
+    return ch;
 }
 
 int char_length(charStack *s){
@@ -30,8 +31,9 @@ void char_pop(charStack *s,char *ch){
 
 
 //数栈实现
-void num_top(numStack *s,LL *e){
-    *e = s->top->data;
+LL num_top(numStack *s){
+    LL e = s->top->data;
+    return e;
 }
 int num_length(numStack *s){
     int len = s->count;
