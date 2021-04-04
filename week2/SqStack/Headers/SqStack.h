@@ -24,6 +24,8 @@ Status destroyStack(SqStack *s);
 Status stackLength(SqStack *s,int *length);
 Status pushStack(SqStack *s,ElemType data);
 Status popStack(SqStack *s,ElemType *data);
-Status TraverseLStack(SqStack *s);
+Status TraverseStack(SqStack *s);
+void choice(char str);
+void showmenu();
 
 #endif 
