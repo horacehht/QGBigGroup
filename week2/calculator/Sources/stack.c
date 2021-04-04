@@ -20,13 +20,16 @@ void char_push(charStack *s,char ch){
     s->top = p;
     s->count++;
 }
-void char_pop(charStack *s,char *ch){
+char char_pop(charStack *s){
     charStackPtr p;
+    char ch;
     p = s->top->next;
-    *ch = s->top->data;
+    ch = s->top->data;
+    //删除栈顶元素
     free(s->top);
     s->top = p;
     s->count--;
+    return ch;//返回栈顶数据
 }
 
 
@@ -47,11 +50,12 @@ void num_push(numStack *s,LL e){
     s->top = p;
     s->count++;
 }
-void num_pop(numStack *s,LL *e){
+LL num_pop(numStack *s){
     numStackPtr p;
     p = s->top->next;
-    *e = s->top->data;
+    LL e = s->top->data;
     free(s->top);
     s->top = p;
     s->count--;
+    return e;
 }

@@ -17,11 +17,11 @@ int get_priority(char ch){
 }
 LL gcd(LL a,LL b);//返回最大公约数
 LL lcm(LL a,LL b);//返回最小公倍数（调用gcd）
-LL calc()//计算两数结果，将栈内原来两数和运算符提取并移除，返回计算数值
+LL calc(numStack* operand, charStack* oprator)//计算两数结果，将栈内原来两数和运算符提取并移除，返回计算数值
 {
-    LL b = OPERAND.top(); OPERAND.pop();
-    LL a = OPERAND.top(); OPERAND.pop();
-    char ch = OPERATOR.top(); OPERATOR.pop();
+    LL b = num_pop(operand);
+    LL a = num_pop(operand);
+    char ch = char_pop(oprator);
 
     switch (ch) {
     case '+':

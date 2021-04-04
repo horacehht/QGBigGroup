@@ -21,7 +21,7 @@ typedef struct charStack
 char char_top(charStack *s);
 int char_length(charStack *s);
 void char_push(charStack *s,char ch);
-void char_pop(charStack *s,char *ch);
+char char_pop(charStack *s);
 
 
 //数栈
@@ -40,6 +40,6 @@ typedef struct numStack
 LL num_top(numStack *s);
 int num_length(numStack *s);
 void num_push(numStack *s,LL e);
-void num_pop(numStack *s,LL *e);
+LL num_pop(numStack *s);
 
 #endif
