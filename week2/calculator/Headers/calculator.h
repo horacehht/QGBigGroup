@@ -1,10 +1,53 @@
-#ifndef CALCULATOR_H_INCLUDED
-#define CALCULATOR_H_INCLUDED
+//
+// Created by Horac on 2021/4/4.
+//
 
-#define SIZE 1010
-#include".\stack.h"
+#ifndef CLION_WORKSPACE_CALCULATOR_H
+#define CLION_WORKSPACE_CALCULATOR_H
 
-int get_priority(char ch);//åˆ¤æ–­è¿ç®—ç¬¦ä¼˜å…ˆçº§çš„å‡½æ•°ï¼Œè¿”å›ä¼˜å…ˆçº§0123
-LL calc(numStack* operand, charStack* oprator);//è®¡ç®—ä¸¤æ•°ç»“æœï¼Œå°†æ ˆå†…åŸæ¥ä¸¤æ•°å’Œè¿ç®—ç¬¦æå–å¹¶ç§»é™¤ï¼Œè¿”å›è®¡ç®—æ•°å€¼
+typedef long long LL;
 
-#endif
+//·ûÕ»
+typedef struct charStackNode
+{
+    char data;
+    struct charStackNode *next;
+}charStackNode, *charStackPtr;
+
+typedef struct charStack
+{
+    charStackPtr top;
+    int	count;
+}charStack;
+
+//É¸Ñ¡ÁËÒ»Ğ©ÊµÏÖÁËµÄº¯Êı£¬°ÑElemType¸Ä³ÉÁËchar
+//topÕ»¶¥ÔªËØ£¬lengthÔªËØ¸öÊı£¬pushÑ¹Õ»£¬pop³öÕ»
+char char_top(charStack *s);
+int char_length(charStack *s);
+void char_push(charStack *s,char ch);
+char char_pop(charStack *s);
+
+
+//ÊıÕ»
+typedef struct numStackNode
+{
+    LL data;
+    struct numStackNode *next;
+}numStackNode, *numStackPtr;
+
+typedef struct numStack
+{
+    numStackPtr top;
+    int	count;
+}numStack;
+//topÕ»¶¥ÔªËØ£¬lengthÔªËØ¸öÊı£¬pushÑ¹Õ»£¬pop³öÕ»
+LL num_top(numStack *s);
+int num_length(numStack *s);
+void num_push(numStack *s,LL e);
+LL num_pop(numStack *s);
+
+//¼ÆËãÓÃµÄº¯Êı
+int get_priority(char ch);//ÅĞ¶ÏÔËËã·ûÓÅÏÈ¼¶µÄº¯Êı£¬·µ»ØÓÅÏÈ¼¶0123
+LL calc(numStack* operand, charStack* operator);//¼ÆËãÁ½Êı½á¹û£¬½«Õ»ÄÚÔ­À´Á½ÊıºÍÔËËã·ûÌáÈ¡²¢ÒÆ³ı£¬·µ»Ø¼ÆËãÊıÖµ
+
+#endif //CLION_WORKSPACE_CALCULATOR_H
