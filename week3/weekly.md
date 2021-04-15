@@ -69,6 +69,23 @@ while (p!=NULL){
 
 解决问题。
 
+### 2.matplotlib绘图问题
+
+不管运行什么代码，只要是用matplotlib画图的，都会报这个错`RuntimeError: In FT2Font: Can not load face`
+
+报错的原因是中文字体的设置
+
+解决方法：
+
+1. 删除字体缓存.matplotlib/文件夹下的所有文件及文件夹
+2. 并通过matplotlib.rcParams设置字体
+
+```python
+import matplotlib
+matplotlib.rcParams['font.family'] = 'sans-serif'  
+matplotlib.rcParams['font.sans-serif'] = 'NSimSun,Times New Roman'# 中文设置成宋体，除此之外的字体设置成New Roman 
+```
+
 ## 下周规划
 
 1.中期考核完进行进行算法的学习，学bp。
