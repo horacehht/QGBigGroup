@@ -311,6 +311,160 @@ int GetKNumber(int *a, int size, int k){
     }
 }
 
+//向它传入文件的名字，生成对应的文件
+void save(char name[], int size){
+    int arr[size];//生成对应大小的数组存放数字
+    FILE *fp = fopen(name, "w+");
+    srand((unsigned)(time(NULL)));
+    for (int i = 0; i < size; ++i) {
+        arr[i] = rand()%500;
+        fprintf(fp,"%d ", arr[i]);
+    }//对文件进行写入
+    fclose(fp);
+}
+
+void load(char name[], int size, int *arr){
+    //将三个文件的数字导入到数组中
+    FILE *f1;
+    f1 = fopen(name, "r");
+    for (int i = 0; i < size; ++i){
+        fscanf(f1, "%d ", &arr[i]);
+    }
+    fclose(f1);
+}
+
+//三个菜单
+void mainmenu(){//主菜单
+    printf("欢迎使用排序时间测试系统\n");
+    printf("请选择以下两项中的一项(填入数字1，2)\n");
+    printf("1.大数据量排序用时\n");
+    printf("2.大量小数组排序用时\n");
+    printf("请选择：");
+}
+
+void datamenu(){//进入大数据量排序后的分支菜单
+    printf("1.1w数据量\n");
+    printf("2.5w数据量\n");
+    printf("3.20w数据量\n");
+}
+
+void sortmenu(){//进到大量小数组排序后的分支菜单
+    printf("1.插入排序\n");
+    printf("2.归并排序\n");
+    printf("3.快速排序递归版\n");
+    printf("4.快速排序非递归版\n");
+    printf("5.计数排序\n");
+    printf("6.基数计数排序\n");
+}
+
+//三个选择分支
+void mainchoice(int ch){//主选择
+    switch (ch)
+    {
+        case 1:{//大数据量排序用时
+            printf("请选择需要测试的数据量\n");
+            datamenu();
+            int n1;
+            while (scanf("%d", &n1) == 0 || getchar() != '\n')
+            {
+                printf("非法输入，请重新输入：");
+                while (getchar() != '\n');  // 清除缓存区
+            }
+            datachoice(n1);
+            break;
+        }
+
+        case 2:{//大量小数组排序用时
+            sortmenu();
+            printf("请选择一种排序算法:");
+            int n2;
+            while (scanf("%d", &n2) == 0 || getchar() != '\n')
+            {
+                printf("非法输入，请重新输入：");
+                while (getchar() != '\n');  // 清除缓存区
+            }
+            sortchoice(n2);
+            break;
+        }
+
+        default:{//输入不规范
+            printf("输入不规范！请重新输入\n");
+            break;
+        }
+    }
+}
+
+void datachoice(int n){//大数据量排序分支
+    int size;
+    char *filename;
+    if(n==1){
+        size = 10000;
+        filename = "1w.txt";
+    }
+    else if(n==2){
+        size = 50000;
+        filename = "5w.txt";
+    }
+    else if(n==3){
+        size = 200000;
+        filename = "20w.txt";
+    }
+    else{
+        printf("输入不规范，请重新输入!\n");
+        return;
+    }
+    save(filename, size);//将相应数量的随机数保存到文件
+    int arr[size];//建立一个用于导入文件中数字的数组
+    clock_t time;//记录时间
+    //建立函数指针数组，通过循环依此调用一个函数
+    void *func[] = {insert_time_test, merge_time_test, quick1_time_test,
+                    quick2_time_test, count_time_test, RadixCount_time_test};
+    char *greet[] = { "插入排序用时:", "归并排序用时:", "递归版快排用时:", "非递归版快排用时:",
+                      "计数排序用时:", "基数计数排序"};
+    void (*p)(int *,int ,clock_t *);//设置一个指向参数为int*,int,clock_t *型
+    // 返回类型为void型的函数指针
+    for (int i = 0; i < 6; ++i) {
+        p = func[i];//指向所选的排序函数
+        load(filename, size, arr);//每一次调用都要重新载入数组
+        // 不然下一次排序的数组已经排序好了，会对排序的时间产生细微的影响
+        p(arr, size, &time);//通过函数指针调用某个排序测试函数
+        printf(greet[i]);//用户交互
+        printf("%dms\n",time);//输出每一个排序所花费的时间
+    }
+    printf("\n");
+}
+
+void sortchoice(int n){
+    if(n > 6 || n < 1){
+        printf("输入不规范！\n");
+        return;//直接结束该函数
+    }
+    printf("测试该函数对数据量为100的数组进行100次排序\n");
+    char *filename = "100.txt";
+    int size = 100;
+    save(filename, size);//将相应数量的随机数保存到文件
+    int arr[size];//生成相应数组
+    clock_t total_time = 0;//记录总时间
+    void *func[] = {insert_time_test, merge_time_test, quick1_time_test,
+                    quick2_time_test, count_time_test, RadixCount_time_test};
+    char *greet[] = { "插入排序总用时:", "归并排序总用时:",    "递归版快排总用时:", "非递归版快排总用时:",
+                      "计数排序总用时:", "基数计数总用时"};//加了个总
+    void (*p)(int *, int ,clock_t *);//与datachoice的p同理
+    p = func[n-1];//选择一个排序函数
+    for (int i = 0; i < 100; ++i) {//排序100次
+        clock_t time = 0;//用于记录每一次排序的时间
+        load(filename, size, arr);
+        p(arr, size, &time);
+        total_time += time;//每次的时间进行累加
+    }
+    printf(greet[n-1]);
+    printf("%dms\n\n", total_time);//输出总时间
+}
+
+//排序算法的测试函数
+//原本我都是在测试函数中输出花费时间的，但由于第二个选项sortchoice要对一个排序函数测试100次
+// 如果嵌入在里面，那条printf也会循环100次，用户观感极差，且sortchioce要的是总时间
+// 所以函数都加了一个clock_t指针time，将time从函数里出来再选择是否printf
 void insert_time_test(int *arr, int size, clock_t *time){
     //插入排序用时
     clock_t start = clock();//生成一个时间量
@@ -358,27 +512,4 @@ void RadixCount_time_test(int *arr, int size, clock_t *time){
     RadixCountSort(arr, size);
     clock_t diff = clock()-start;//结束时间
     *time = diff;
-}
-
-void mainmenu(){
-    printf("欢迎使用排序时间统计系统\n");
-    printf("1.大数据量排序用时\n");
-    printf("2.大量小数组排序用时\n");
-    printf("3.颜色排序用时\n");
-    printf("请选择：");
-}
-
-void datamenu(){
-    printf("1.1w数据量\n");
-    printf("2.5w数据量\n");
-    printf("3.20w数据量\n");
-}
-
-void sortmenu(){
-    printf("1.插入排序\n");
-    printf("2.归并排序\n");
-    printf("3.快速排序递归版\n");
-    printf("4.快速排序非递归版\n");
-    printf("5.计数排序\n");
-    printf("6.基数计数排序\n");
 }

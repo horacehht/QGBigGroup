@@ -1,8 +1,7 @@
 #ifndef SORT_H_INCLUDED
 #define SORT_H_INCLUDED
-
 #include<time.h>
-
+//文件存储和读取
 void save(char name[], int size);
 void load(char name[], int size, int *arr);
 
@@ -10,16 +9,18 @@ void load(char name[], int size, int *arr);
 void mainmenu();
 void datamenu();
 void sortmenu();
-void mainchoice(int ch);
-void datachoice(int ch);
-void sortchoice(int ch);
+void mainchoice(int n);
+void datachoice(int n);
+void sortchoice(int n);
 
+//排序算法的测试函数
 void insert_time_test(int *arr1, int size, clock_t *time);
 void merge_time_test(int *arr, int size, clock_t *time);
 void quick1_time_test(int *arr, int size, clock_t *time);
 void quick2_time_test(int *arr, int size, clock_t *time);
 void count_time_test(int *arr, int size, clock_t *time);
-void RadixCount_time_test(int *arr, int size, clock_t *time)
+void RadixCount_time_test(int *arr, int size, clock_t *time);
+
 /**
  *  @name        : void insertSort(int *a,int n);
  *  @description : 插入排序算法
